@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
@@ -7,13 +7,13 @@ import useRequest from './components/hooks/request';
 function App() {
     const [tasks, setTasks] = useState([]);
 
-    const requestTasks = (data) => {
+    const requestTasks = useCallback((data) => {
         const loadedTasks = [];
         for (const taskKey in data) {
             loadedTasks.push({ id: taskKey, text: data[taskKey].text });
         }
         setTasks(loadedTasks);
-    };
+    }, []);
 
 
     const {isLoading, error, sendRequest: fetchTasks} = useRequest({

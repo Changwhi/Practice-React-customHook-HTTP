@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 const useRequest = (requestConfig, applyData) => {
 
@@ -10,7 +10,7 @@ const useRequest = (requestConfig, applyData) => {
         error: null,
     })
 
-    const sendRequest = async () => {
+    const sendRequest = useCallback(async () => {
         //setError(null);
         setCurrentState({
             ...currentState,
@@ -47,7 +47,7 @@ const useRequest = (requestConfig, applyData) => {
             ...currentState,
             isLoading: false,
         });
-    }
+    }, [applyData, requestConfig, currentState]);
 
     return {
         isLoading: currentState.isLoading,
